@@ -16,12 +16,22 @@ export default function Home() {
 			setIsLoading(false);
 		}, 2000);
 
-		const handleMouseMove = (e) => {
-			setMousePosition({
-				x: (e.clientX / window.innerWidth - 0.5) * 20,
-				y: (e.clientY / window.innerHeight - 0.5) * 20,
-			});
-		};
+    interface MousePosition {
+      x: number;
+      y: number;
+    }
+
+    interface MouseEventWithClient extends MouseEvent {
+      clientX: number;
+      clientY: number;
+    }
+
+    const handleMouseMove = (e: MouseEventWithClient) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20,
+      });
+    };
 
 		window.addEventListener("mousemove", handleMouseMove);
 
