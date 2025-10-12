@@ -1,6 +1,6 @@
 "use server";
 
-import pdf from "pdf-parse";
+import { PDFParse } from "pdf-parse";
 import { db } from "@/lib/db-config";
 import { documents } from "@/lib/db-schema";
 import { generateEmbeddings } from "@/lib/embeddings";
@@ -8,16 +8,29 @@ import { chunkContent } from "@/lib/chunking";
 
 export async function processPdfFile(formData: FormData) {
 	try {
-		const file = formData.get("pdf]") as File;
+		const file = formData.get("pdf");
+		if (!(file instanceof File)) {
+			console.error("No valid PDF file found in the request.");
+			return { success: false, error: "No valid PDF file provided" };
+		}
 
 		const bytes = await file.arrayBuffer();
 		const buffer = Buffer.from(bytes);
-		const data = await pdf(buffer);
+
+		const parser = new PDFParse({ data: buffer });
+
+		let data;
+		try {
+			data = await parser.getText();
+		} finally {
+			await parser.destroy();
+		}
 
 		if (!data.text || data.text.trim().length === 0) {
+			console.error("PDF contains no extractable text");
 			return {
 				success: false,
-				message: "The uploaded PDF file contains no extractable text.",
+				error: "The uploaded PDF contains no extractable text",
 			};
 		}
 
@@ -29,16 +42,22 @@ export async function processPdfFile(formData: FormData) {
 			embedding: embeddings[index],
 		}));
 
-		await db.insert(documents).values(records);
+		try {
+			await db.insert(documents).values(records);
+		} catch (dbError) {
+			console.error("Neon DB insert failed:", dbError);
+			return {
+				success: false,
+				error: "Failed to insert PDF chunks into database",
+			};
+		}
+
 		return {
 			success: true,
-			message: `created ${records.length} searchable chunks.`,
+			message: `Created ${records.length} searchable chunks`,
 		};
 	} catch (error) {
-		console.error("Error processing PDF file:", error);
-		return {
-			success: false,
-			message: "There was an error processing the PDF file.",
-		};
+		console.error("PDF processing error:", error);
+		return { success: false, error: "Failed to process PDF" };
 	}
 }
