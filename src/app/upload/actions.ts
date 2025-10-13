@@ -5,14 +5,25 @@ import { db } from "@/lib/db-config";
 import { documents } from "@/lib/db-schema";
 import { generateEmbeddings } from "@/lib/embeddings";
 import { chunkContent } from "@/lib/chunking";
+import pino from "pino";
+
+const logger = pino({
+	level: process.env.LOG_LEVEL || "info",
+	transport: {
+		target: "pino-pretty",
+		options: { colorize: true },
+	},
+});
 
 export async function processPdfFile(formData: FormData) {
 	try {
 		const file = formData.get("pdf");
 		if (!(file instanceof File)) {
-			console.error("No valid PDF file found in the request.");
+			logger.error("No valid PDF file found in the request");
 			return { success: false, error: "No valid PDF file provided" };
 		}
+
+		logger.info({ fileName: file.name, fileSize: file.size }, "PDF file received");
 
 		const bytes = await file.arrayBuffer();
 		const buffer = Buffer.from(bytes);
@@ -27,12 +38,14 @@ export async function processPdfFile(formData: FormData) {
 		}
 
 		if (!data.text || data.text.trim().length === 0) {
-			console.error("PDF contains no extractable text");
+			logger.warn("PDF contains no extractable text");
 			return {
 				success: false,
 				error: "The uploaded PDF contains no extractable text",
 			};
 		}
+
+		logger.info({ textLength: data.text.length }, "PDF text extracted");
 
 		const chunks = await chunkContent(data.text);
 		const embeddings = await generateEmbeddings(chunks);
@@ -44,8 +57,9 @@ export async function processPdfFile(formData: FormData) {
 
 		try {
 			await db.insert(documents).values(records);
+			logger.info({ chunkCount: records.length }, "PDF chunks inserted into DB");
 		} catch (dbError) {
-			console.error("Neon DB insert failed:", dbError);
+			logger.error({ dbError }, "Neon DB insert failed");
 			return {
 				success: false,
 				error: "Failed to insert PDF chunks into database",
@@ -57,7 +71,7 @@ export async function processPdfFile(formData: FormData) {
 			message: `Created ${records.length} searchable chunks`,
 		};
 	} catch (error) {
-		console.error("PDF processing error:", error);
+		logger.error({ error }, "PDF processing error");
 		return { success: false, error: "Failed to process PDF" };
 	}
 }
