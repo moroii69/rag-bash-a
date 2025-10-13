@@ -162,7 +162,7 @@ export default function Home() {
 					}}
 					transition={{ duration: 0.8, delay: 1 }}
 					className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-					<SignedOut>
+					{!isSignedIn ? (
 						<SignUpButton mode="modal">
 							<button className="px-8 py-3 bg-zinc-900/60 text-white rounded border border-zinc-800 hover:border-[#F48120]/40 transition-colors cursor-pointer">
 								<span className="flex items-center gap-2 text-sm tracking-wide group-hover:text-[#F48120]/90">
@@ -170,9 +170,7 @@ export default function Home() {
 								</span>
 							</button>
 						</SignUpButton>
-					</SignedOut>
-
-					<SignedIn>
+					) : (
 						<button
 							onClick={() => router.push("/chat")}
 							className="px-8 py-3 bg-zinc-900/60 text-white rounded border border-zinc-800 hover:border-[#F48120]/40 transition-colors cursor-pointer">
@@ -180,7 +178,7 @@ export default function Home() {
 								Start Chatting
 							</span>
 						</button>
-					</SignedIn>
+					)}
 
 					<button className="group px-8 py-3 text-zinc-400 rounded border border-zinc-900 hover:text-zinc-300 hover:border-zinc-800 transition-all cursor-pointer">
 						<span className="text-sm tracking-wide flex items-center gap-2">
