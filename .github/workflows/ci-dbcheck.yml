@@ -1,0 +1,15 @@
+name: DB Check
+on: [push, pull_request]
+jobs:
+  dbcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: node scripts/db-check.mjs
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
