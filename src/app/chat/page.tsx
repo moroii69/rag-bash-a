@@ -32,11 +32,11 @@ import {
 } from "@/components/ui/tooltip";
 
 const suggestions: { key: string; value: string }[] = [
-  { key: nanoid(), value: "Explain quantum computing" },
-  { key: nanoid(), value: "Write a Python function" },
-  { key: nanoid(), value: "Analyze this dataset" },
-  { key: nanoid(), value: "Help me debug code" },
-];
+	{ key: nanoid(), value: "Give me details about courses offered at Lords Institute" },
+	{ key: nanoid(), value: "What are the college timings?" },
+	{ key: nanoid(), value: "Who is the admission incharge and how to contact them?" },
+	{ key: nanoid(), value: "Tell me about upcoming campus events" },
+  ];  
 
 export default function RAGChatBot() {
   const [input, setInput] = useState("");
