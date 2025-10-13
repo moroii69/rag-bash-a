@@ -5,7 +5,7 @@ import {
 	tool,
 	InferUITools,
 	UIDataTypes,
-	stepCountIs,
+  stepCountIs,
 } from "ai";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
@@ -13,7 +13,8 @@ import { searchDocuments } from "@/lib/search";
 
 const tools = {
 	searchKnowledgeBase: tool({
-		description: "Search the knowledge base for relevant information.",
+		description:
+			"Search the knowledge base for relevant information about Lords Institute of Engineering & Technology.",
 		inputSchema: z.object({
 			query: z
 				.string()
@@ -32,11 +33,11 @@ const tools = {
 						"No results found in knowledge base for query:",
 						query
 					);
-					return "No relevant info found in the database.";
+					return "No relevant information found in the database.";
 				}
 
 				const formattedResults = results
-					.map((r, i) => `${i + 1}: ${r.content}`)
+					.map((r, i) => `Document ${i + 1}: ${r.content}`)
 					.join("\n\n");
 
 				console.log(
@@ -67,13 +68,19 @@ export async function POST(req: Request) {
 			model: google("gemini-2.5-flash-lite"),
 			messages: convertToModelMessages(messages),
 			tools,
-			system: `
-        You are an AI assistant specialized in providing accurate answers from the Lords Institute of Engineering & Technology knowledge base. 
-        If the information is available, provide it concisely and accurately. 
-        If the information is not available, use the provided tool to search the knowledge base. 
-        For queries unrelated to the Lords Institute of Engineering & Technology, respond with: "I am only able to provide information pertaining to the Lords Institute of Engineering & Technology." 
-        Do not speculate or provide information outside the knowledge base.`,
-			stopWhen: stepCountIs(2),
+			system: `You are bash-A, a helpful AI assistant for the Lords Institute of Engineering & Technology.
+
+When users ask questions about Lords Institute (courses, faculty, admissions, timings, events, facilities, etc.), you MUST:
+1. Use the searchKnowledgeBase tool to find relevant information
+2. Base your answer on the search results
+3. Keep responses concise and helpful
+
+For greetings (hello, hi, hey), respond warmly and offer to help with Lords Institute information.
+
+For topics unrelated to Lords Institute, politely say: "I'm specifically designed to help with information about Lords Institute of Engineering & Technology."
+
+Always search the knowledge base before answering Lords Institute questions.`,
+			stopWhen: stepCountIs(5),
 		});
 
 		console.log("Streaming chat response initiated");
