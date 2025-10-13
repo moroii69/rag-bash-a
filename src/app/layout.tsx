@@ -4,8 +4,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Navigation } from "@/components/navigation";
-import { usePathname } from "next/navigation";
 import { dark } from "@clerk/themes";
 
 const geistSans = Geist({
@@ -23,8 +21,6 @@ export default function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const pathname = usePathname();
-
 	return (
 		<ClerkProvider
 			appearance={{
@@ -34,7 +30,6 @@ export default function RootLayout({
 			<html lang="en">
 				<body
 					className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-					{pathname !== "/" && <Navigation />}
 					{children}
 				</body>
 			</html>
