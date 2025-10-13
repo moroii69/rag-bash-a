@@ -231,7 +231,7 @@ export default function RAGChatBot() {
               </a>{" "}
               and have read our{" "}
               <a
-                href="/privacy"
+                href="/privacy-policy"
                 className="text-zinc-400 hover:text-zinc-300 underline"
               >
                 Privacy Policy
