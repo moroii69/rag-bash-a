@@ -32,11 +32,17 @@ import {
 } from "@/components/ui/tooltip";
 
 const suggestions: { key: string; value: string }[] = [
-	{ key: nanoid(), value: "Give me details about courses offered at Lords Institute" },
-	{ key: nanoid(), value: "What are the college timings?" },
-	{ key: nanoid(), value: "Who is the admission incharge and how to contact them?" },
-	{ key: nanoid(), value: "Tell me about upcoming campus events" },
-  ];  
+  {
+    key: nanoid(),
+    value: "Give me details about courses offered at Lords Institute",
+  },
+  { key: nanoid(), value: "What are the college timings?" },
+  {
+    key: nanoid(),
+    value: "Who is the admission incharge and how to contact them?",
+  },
+  { key: nanoid(), value: "Tell me about upcoming campus events" },
+];
 
 export default function RAGChatBot() {
   const [input, setInput] = useState("");
@@ -75,8 +81,8 @@ export default function RAGChatBot() {
       <div className="relative z-10 max-w-4xl mx-auto px-4 h-[calc(100vh-4rem)] flex flex-col">
         <div className="flex flex-col h-full py-6">
           {/* Messages */}
-          <Conversation className="flex-1 mb-4">
-            <ConversationContent>
+          <Conversation className="flex-1 mb-4 overflow-hidden">
+            <ConversationContent className="h-full overflow-y-auto scrollbar-clean">
               {messages.map((message, messageIndex) => (
                 <Fragment key={message.id}>
                   {message.parts.map((part, i) => {
@@ -87,47 +93,41 @@ export default function RAGChatBot() {
 
                         return (
                           <Fragment key={`${message.id}-${i}`}>
-                            <div
-                              className={`flex w-full ${
-                                message.role === "user"
-                                  ? "py-4 justify-end"
-                                  : "py-2 justify-start"
-                              }`}
-                            >
-                              <div
-                                className={`px-3 py-2 rounded-lg ${
-                                  message.role === "user"
-                                    ? "bg-zinc-800/30 text-zinc-300 max-w-[60%]"
-                                    : "bg-transparent text-zinc-300 max-w-[80%]"
-                                }`}
-                              >
-                                <div className="whitespace-pre-wrap">
+                            {message.role === "user" ? (
+                              <div className="flex w-full py-4 justify-end">
+                                <div className="px-3 py-2 rounded-lg bg-zinc-800/30 text-zinc-300 max-w-[60%]">
                                   {part.text}
                                 </div>
                               </div>
-                            </div>
-                            {message.role === "assistant" && isLastMessage && (
-                              <div className="flex justify-start gap-4 mt-1">
-                                <button
-                                  onClick={() => regenerate()}
-                                  className="text-xs text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/20 px-2 py-1 rounded transition-colors cursor-pointer"
-                                >
-                                  <RefreshCcwIcon className="size-3 inline mr-1" />
-                                  Regenerate
-                                </button>
-                                <button
-                                  onClick={() => handleCopy(part.text)}
-                                  className="text-xs text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/20 px-2 py-1 rounded transition-colors cursor-pointer"
-                                >
-                                  {copiedText ? (
-                                    <span>{copiedText}</span>
-                                  ) : (
-                                    <>
-                                      <CopyIcon className="size-3 inline mr-1" />
-                                      Copy
-                                    </>
+                            ) : (
+                              <div className="flex w-full py-2 justify-start">
+                                <div className="max-w-[80%]">
+                                  <Response>{part.text}</Response>
+                                  {isLastMessage && (
+                                    <div className="flex justify-start gap-4 mt-1">
+                                      <button
+                                        onClick={() => regenerate()}
+                                        className="text-xs text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/20 px-2 py-1 rounded transition-colors cursor-pointer"
+                                      >
+                                        <RefreshCcwIcon className="size-3 inline mr-1" />
+                                        Regenerate
+                                      </button>
+                                      <button
+                                        onClick={() => handleCopy(part.text)}
+                                        className="text-xs text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/20 px-2 py-1 rounded transition-colors cursor-pointer"
+                                      >
+                                        {copiedText ? (
+                                          <span>{copiedText}</span>
+                                        ) : (
+                                          <>
+                                            <CopyIcon className="size-3 inline mr-1" />
+                                            Copy
+                                          </>
+                                        )}
+                                      </button>
+                                    </div>
                                   )}
-                                </button>
+                                </div>
                               </div>
                             )}
                           </Fragment>
@@ -170,7 +170,7 @@ export default function RAGChatBot() {
 
             <PromptInput
               onSubmit={handleSubmit}
-              className="bg-zinc-900/50 border border-orange-400/30 rounded-lg hover:border-zinc-700 focus-within:border-orange-500 transition-colors"
+              className="bg-zinc-900/50 border-0 hover:border-0 focus-within:border-0 focus-visible:ring-0 ring-0 rounded-lg transition-none"
             >
               <PromptInputBody>
                 <PromptInputTextarea

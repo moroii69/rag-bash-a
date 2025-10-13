@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-
+@source "../node_modules/streamdown/dist/index.js";
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -119,4 +119,38 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+.scrollbar-clean {
+  overflow-x: hidden;
+
+  /* Chrome, Safari, Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* IE, Edge */
+  -ms-overflow-style: none;
+
+  /* Firefox */
+  scrollbar-width: none;
+}
+
+form.border {
+  border-width: 0 !important;
+}
+
+form.border:hover {
+  border-width: 0 !important;
+}
+
+form.border:active {
+  border-width: 0 !important;
+}
+
+form[role="form"],
+form[role="form"]:focus,
+form[role="form"]:focus-within {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
