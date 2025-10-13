@@ -6,6 +6,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Navigation } from "@/components/navigation";
 import { usePathname } from "next/navigation";
+import { dark } from "@clerk/themes";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -17,7 +18,6 @@ const geistMono = Geist_Mono({
 	subsets: ["latin"],
 });
 
-
 export default function RootLayout({
 	children,
 }: {
@@ -26,7 +26,11 @@ export default function RootLayout({
 	const pathname = usePathname();
 
 	return (
-		<ClerkProvider>
+		<ClerkProvider
+			appearance={{
+				baseTheme: dark,
+			}}
+		>
 			<html lang="en">
 				<body
 					className={`${geistSans.variable} ${geistMono.variable} antialiased`}>

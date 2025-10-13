@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dithering as DitheringEffect } from "@paper-design/shaders-react";
+import { SignUpButton } from "@clerk/nextjs";
 
 export default function Home() {
 	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -16,22 +17,22 @@ export default function Home() {
 			setIsLoading(false);
 		}, 2000);
 
-    interface MousePosition {
-      x: number;
-      y: number;
-    }
+		interface MousePosition {
+			x: number;
+			y: number;
+		}
 
-    interface MouseEventWithClient extends MouseEvent {
-      clientX: number;
-      clientY: number;
-    }
+		interface MouseEventWithClient extends MouseEvent {
+			clientX: number;
+			clientY: number;
+		}
 
-    const handleMouseMove = (e: MouseEventWithClient) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      });
-    };
+		const handleMouseMove = (e: MouseEventWithClient) => {
+			setMousePosition({
+				x: (e.clientX / window.innerWidth - 0.5) * 20,
+				y: (e.clientY / window.innerHeight - 0.5) * 20,
+			});
+		};
 
 		window.addEventListener("mousemove", handleMouseMove);
 
@@ -158,11 +159,13 @@ export default function Home() {
 					}}
 					transition={{ duration: 0.8, delay: 1 }}
 					className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-					<button className="px-8 py-3 bg-zinc-900/60 text-white rounded border border-zinc-800 hover:border-[#F48120]/40 transition-colors cursor-pointer">
-						<span className="flex items-center gap-2 text-sm tracking-wide group-hover:text-[#F48120]/90">
-							Start Chatting
-						</span>
-					</button>
+					<SignUpButton mode="modal">
+						<button className="px-8 py-3 bg-zinc-900/60 text-white rounded border border-zinc-800 hover:border-[#F48120]/40 transition-colors cursor-pointer">
+							<span className="flex items-center gap-2 text-sm tracking-wide group-hover:text-[#F48120]/90">
+								Start Chatting
+							</span>
+						</button>
+					</SignUpButton>
 
 					<button className="group px-8 py-3 text-zinc-400 rounded border border-zinc-900 hover:text-zinc-300 hover:border-zinc-800 transition-all cursor-pointer">
 						<span className="text-sm tracking-wide flex items-center gap-2">
