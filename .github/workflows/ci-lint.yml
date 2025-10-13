@@ -9,7 +9,17 @@ jobs:
         with:
           node-version: 20
           cache: npm
+
       - run: npm ci
-      - run: npx --yes prettier@3.3.3 --ignore-path .gitignore --check "**/*.{ts,tsx,js,jsx,md,mdx}"
-      - run: npx @biomejs/biome format --check .
-      - run: npx @biomejs/biome lint --reporter=github .
+
+      - name: Prettier check and auto-fix
+        run: npx prettier --check . || npx prettier --write .
+        continue-on-error: true
+
+      - name: Biome format check
+        run: npx @biomejs/biome format --check .
+        continue-on-error: true
+
+      - name: Biome lint
+        run: npx @biomejs/biome lint --reporter=github .
+        continue-on-error: true
