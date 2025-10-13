@@ -1,236 +1,246 @@
 "use client";
 
-import { Fragment, useState, useEffect } from "react";
+import { useState, Fragment } from "react";
 import { useChat } from "@ai-sdk/react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Navigation } from "@/components/navigation";
 import {
-	Conversation,
-	ConversationContent,
-	ConversationScrollButton,
+  Conversation,
+  ConversationContent,
+  ConversationScrollButton,
 } from "@/components/ai-elements/conversation";
 import { Message, MessageContent } from "@/components/ai-elements/message";
-import {
-	PromptInput,
-	PromptInputBody,
-	type PromptInputMessage,
-	PromptInputSubmit,
-	PromptInputTextarea,
-	PromptInputToolbar,
-	PromptInputTools,
-} from "@/components/ai-elements/prompt-input";
 import { Response } from "@/components/ai-elements/response";
 import { Loader } from "@/components/ai-elements/loader";
-import { Navigation } from "@/components/navigation";
+import {
+  PromptInput,
+  PromptInputBody,
+  PromptInputButton,
+  type PromptInputMessage,
+  PromptInputSpeechButton,
+  PromptInputSubmit,
+  PromptInputTextarea,
+  PromptInputToolbar,
+  PromptInputTools,
+} from "@/components/ai-elements/prompt-input";
+import { Suggestion, Suggestions } from "@/components/ai-elements/suggestion";
+import { RefreshCcwIcon, CopyIcon, GlobeIcon } from "lucide-react";
+import { nanoid } from "nanoid";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+const suggestions: { key: string; value: string }[] = [
+  { key: nanoid(), value: "Explain quantum computing" },
+  { key: nanoid(), value: "Write a Python function" },
+  { key: nanoid(), value: "Analyze this dataset" },
+  { key: nanoid(), value: "Help me debug code" },
+];
 
 export default function RAGChatBot() {
-	const [input, setInput] = useState("");
-	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-	const { messages, sendMessage, status } = useChat();
+  const [input, setInput] = useState("");
+  const [copiedText, setCopiedText] = useState("");
+  const { messages, sendMessage, status, regenerate } = useChat();
 
-	useEffect(() => {
-		const handleMouseMove = (e: MouseEvent) => {
-			setMousePosition({
-				x: (e.clientX / window.innerWidth - 0.5) * 15,
-				y: (e.clientY / window.innerHeight - 0.5) * 15,
-			});
-		};
+  const handleSubmit = (message: PromptInputMessage) => {
+    if (!message.text) return;
 
-		window.addEventListener("mousemove", handleMouseMove);
-		return () => window.removeEventListener("mousemove", handleMouseMove);
-	}, []);
+    sendMessage({
+      text: message.text,
+    });
+    setInput("");
+  };
 
-	const handleSubmit = (message: PromptInputMessage) => {
-		if (!message.text) {
-			return;
-		}
-		sendMessage({
-			text: message.text,
-		});
-		setInput("");
-	};
+  const handleSuggestionClick = (suggestion: string) => {
+    setInput(suggestion);
+  };
 
-	return (
-		<div className="relative w-full min-h-screen bg-black font-mono">
-			{/* Animated background gradient */}
-			<div
-				className="absolute inset-0 opacity-15 transition-transform duration-700 ease-out pointer-events-none"
-				style={{
-					transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
-					background: `radial-gradient(circle at ${
-						50 + mousePosition.x / 2
-					}% ${
-						50 + mousePosition.y / 2
-					}%, #F48120 0%, transparent 60%)`,
-				}}
-			/>
+  const handleCopy = async (text: string) => {
+    await navigator.clipboard.writeText(text);
+    setCopiedText("Copied!");
+    setTimeout(() => setCopiedText(""), 2000);
+  };
 
-			{/* Gradient overlay */}
-			<div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/50 pointer-events-none" />
+  return (
+    <div className="w-full min-h-screen bg-black text-white relative">
+      {/* Subtle orange background hint */}
+      <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 via-transparent to-orange-500/3 pointer-events-none" />
+      {/* Navigation */}
+      <div className="relative z-10">
+        <Navigation />
+      </div>
 
-			{/* Navigation (render only on this page) */}
-			<div className="relative z-10">
-				<Navigation />
-			</div>
+      {/* Main chat area */}
+      <div className="relative z-10 max-w-4xl mx-auto px-4 h-[calc(100vh-4rem)] flex flex-col">
+        <div className="flex flex-col h-full py-6">
+          {/* Messages */}
+          <Conversation className="flex-1 mb-4">
+            <ConversationContent>
+              {messages.map((message, messageIndex) => (
+                <Fragment key={message.id}>
+                  {message.parts.map((part, i) => {
+                    switch (part.type) {
+                      case "text":
+                        const isLastMessage =
+                          messageIndex === messages.length - 1;
 
-			{/* Main chat area */}
-			<div className="relative z-10 max-w-4xl mx-auto px-6 h-[calc(100vh-4rem)] flex flex-col">
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.6, delay: 0.2 }}
-					className="flex flex-col h-full py-6">
-					{/* Empty state */}
-					{messages.length === 0 && (
-						<motion.div
-							initial={{ opacity: 0, scale: 0.95 }}
-							animate={{ opacity: 1, scale: 1 }}
-							transition={{ duration: 0.8, delay: 0.4 }}
-							className="flex-1 flex items-center justify-center">
-							<div className="text-center max-w-2xl">
-								<div className="mb-8">
-									<h2 className="text-4xl md:text-5xl font-light mb-4 tracking-tight">
-										<span className="bg-gradient-to-r from-white/70 via-white/50 to-white/30 bg-clip-text text-transparent">
-											Start a conversation
-										</span>
-									</h2>
-									<p className="text-zinc-500 text-sm tracking-wide">
-										Intelligence that responds to your needs
-									</p>
-								</div>
+                        return (
+                          <Fragment key={`${message.id}-${i}`}>
+                            <div
+                              className={`flex w-full ${
+                                message.role === "user"
+                                  ? "py-4 justify-end"
+                                  : "py-2 justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`px-3 py-2 rounded-lg ${
+                                  message.role === "user"
+                                    ? "bg-zinc-800/30 text-zinc-300 max-w-[60%]"
+                                    : "bg-transparent text-zinc-300 max-w-[80%]"
+                                }`}
+                              >
+                                <div className="whitespace-pre-wrap">
+                                  {part.text}
+                                </div>
+                              </div>
+                            </div>
+                            {message.role === "assistant" && isLastMessage && (
+                              <div className="flex justify-start gap-4 mt-1">
+                                <button
+                                  onClick={() => regenerate()}
+                                  className="text-xs text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/20 px-2 py-1 rounded transition-colors cursor-pointer"
+                                >
+                                  <RefreshCcwIcon className="size-3 inline mr-1" />
+                                  Regenerate
+                                </button>
+                                <button
+                                  onClick={() => handleCopy(part.text)}
+                                  className="text-xs text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/20 px-2 py-1 rounded transition-colors cursor-pointer"
+                                >
+                                  {copiedText ? (
+                                    <span>{copiedText}</span>
+                                  ) : (
+                                    <>
+                                      <CopyIcon className="size-3 inline mr-1" />
+                                      Copy
+                                    </>
+                                  )}
+                                </button>
+                              </div>
+                            )}
+                          </Fragment>
+                        );
+                      default:
+                        return null;
+                    }
+                  })}
+                </Fragment>
+              ))}
 
-								<div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
-									{[
-										"Explain quantum computing",
-										"Write a Python function",
-										"Analyze this dataset",
-										"Help me debug code",
-									].map((suggestion, i) => (
-										<motion.button
-											key={i}
-											initial={{ opacity: 0, y: 10 }}
-											animate={{ opacity: 1, y: 0 }}
-											transition={{
-												duration: 0.5,
-												delay: 0.6 + i * 0.1,
-											}}
-											onClick={() => setInput(suggestion)}
-											className="px-4 py-3 bg-zinc-900/40 border border-zinc-800/50 rounded text-left text-sm text-zinc-400 hover:text-zinc-300 hover:border-zinc-700/50 hover:bg-zinc-900/60 transition-all cursor-pointer group">
-											<span className="flex items-center justify-between">
-												{suggestion}
-												<span className="text-zinc-700 group-hover:text-zinc-600 transition-colors">
-													→
-												</span>
-											</span>
-										</motion.button>
-									))}
-								</div>
-							</div>
-						</motion.div>
-					)}
+              {/* Loading indicator using AI elements */}
+              {(status === "submitted" || status === "streaming") && (
+                <div className="flex w-full justify-start py-4">
+                  <div className="max-w-[80%] px-3 py-2 rounded-lg bg-transparent text-zinc-300">
+                    <Loader />
+                  </div>
+                </div>
+              )}
+            </ConversationContent>
+            <ConversationScrollButton />
+          </Conversation>
 
-					{/* Messages */}
-					{messages.length > 0 && (
-						<Conversation className="flex-1 mb-4">
-							<ConversationContent>
-								<AnimatePresence mode="popLayout">
-									{messages.map((message, idx) => (
-										<motion.div
-											key={message.id}
-											initial={{ opacity: 0, y: 20 }}
-											animate={{ opacity: 1, y: 0 }}
-											transition={{ duration: 0.4 }}
-											className="mb-6">
-											{message.parts.map((part, i) => {
-												switch (part.type) {
-													case "text":
-														return (
-															<Fragment
-																key={`${message.id}-${i}`}>
-																<Message
-																	from={
-																		message.role
-																	}
-																	className={
-																		message.role ===
-																		"user"
-																			? "justify-end"
-																			: "justify-start"
-																	}>
-																	<MessageContent>
-																		<Response
-																			className={
-																				message.role ===
-																				"user"
-																					? "text-zinc-200 text-right"
-																					: "text-zinc-100 text-left"
-																			}>
-																			{
-																				part.text
-																			}
-																		</Response>
-																	</MessageContent>
-																</Message>
-															</Fragment>
-														);
-													default:
-														return null;
-												}
-											})}
-										</motion.div>
-									))}
-								</AnimatePresence>
-								{(status === "submitted" ||
-									status === "streaming") && (
-									<motion.div
-										initial={{ opacity: 0, y: 10 }}
-										animate={{ opacity: 1, y: 0 }}
-										className="mb-6">
-										<Loader />
-									</motion.div>
-								)}
-							</ConversationContent>
-							<ConversationScrollButton />
-						</Conversation>
-					)}
+          {/* Input area */}
+          <div className="relative">
+            {/* Suggestions */}
+            {messages.length === 0 && (
+              <div className="mb-4">
+                <Suggestions className="[&>*]:bg-zinc-800/30 [&>*]:text-zinc-500 [&>*]:border-zinc-700/50 [&>*]:hover:bg-zinc-700/40 [&>*]:hover:text-zinc-300">
+                  {suggestions.map((suggestion) => (
+                    <Suggestion
+                      key={suggestion.key}
+                      onClick={handleSuggestionClick}
+                      suggestion={suggestion.value}
+                    />
+                  ))}
+                </Suggestions>
+              </div>
+            )}
 
-					{/* Input area */}
-					<motion.div
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.6, delay: 0.3 }}
-						className="relative">
-						<div className="absolute inset-0 bg-gradient-to-t from-zinc-900/20 to-transparent rounded-lg blur-xl pointer-events-none" />
+            <PromptInput
+              onSubmit={handleSubmit}
+              className="bg-zinc-900/50 border border-orange-400/30 rounded-lg hover:border-zinc-700 focus-within:border-orange-500 transition-colors"
+            >
+              <PromptInputBody>
+                <PromptInputTextarea
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Type your message..."
+                  className="bg-transparent text-white placeholder:text-zinc-500 resize-none min-h-[48px] max-h-32 outline-none"
+                />
+              </PromptInputBody>
 
-						<PromptInput
-							onSubmit={handleSubmit}
-							className="relative bg-zinc-950/60 backdrop-blur-sm border border-white/10 rounded-lg hover:border-white/15 focus-within:border-white/20 transition-colors">
-							<PromptInputBody>
-								<PromptInputTextarea
-									value={input}
-									onChange={(e) => setInput(e.target.value)}
-									placeholder="Ask anything..."
-									className="bg-zinc-900/40 text-zinc-100 placeholder:text-zinc-500 focus:outline-none resize-none transition-colors"
-								/>
-							</PromptInputBody>
-							<PromptInputToolbar className="border-t border-zinc-800/30 bg-zinc-900/20">
-								<PromptInputTools>
-									{/* model selector, web search, etc. */}
-								</PromptInputTools>
-								<PromptInputSubmit
-									disabled={!input && !status}
-									status={status}
-									className="disabled:opacity-40 disabled:cursor-not-allowed hover:text-[#F48120] transition-colors"
-								/>
-							</PromptInputToolbar>
-						</PromptInput>
+              <PromptInputToolbar className="border-t border-zinc-800/50 bg-zinc-900/30">
+                <PromptInputTools>
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="opacity-50 relative cursor-not-allowed"
+                      title="Coming soon"
+                    >
+                      <PromptInputSpeechButton
+                        onTranscriptionChange={setInput}
+                        className="pointer-events-none"
+                      />
+                    </div>
+                  </div>
 
-						<p className="text-xs text-zinc-700 text-center mt-3">
-							bash-A can make mistakes. Consider verifying
-							important information.
-						</p>
-					</motion.div>
-				</motion.div>
-			</div>
-		</div>
-	);
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="opacity-50 flex items-center gap-2 px-3 py-2 text-sm text-zinc-400 cursor-not-allowed relative"
+                      title="Coming soon"
+                    >
+                      <GlobeIcon size={16} />
+                      <span>Search</span>
+                    </div>
+                    <span className="text-xs text-orange-500/30">
+                      Coming soon
+                    </span>
+                  </div>
+                </PromptInputTools>
+
+                <PromptInputSubmit
+                  disabled={
+                    !input.trim() ||
+                    status === "submitted" ||
+                    status === "streaming"
+                  }
+                  status={status}
+                  className="text-zinc-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                />
+              </PromptInputToolbar>
+            </PromptInput>
+
+            <p className="text-xs text-zinc-600 text-center mt-3">
+              By messaging bash-A, you agree to our{" "}
+              <a
+                href="/terms"
+                className="text-zinc-400 hover:text-zinc-300 underline"
+              >
+                Terms
+              </a>{" "}
+              and have read our{" "}
+              <a
+                href="/privacy"
+                className="text-zinc-400 hover:text-zinc-300 underline"
+              >
+                Privacy Policy
+              </a>
+              .
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

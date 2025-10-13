@@ -42,7 +42,7 @@ export const Navigation = () => {
 						<a
 							href="/chat"
 							className="px-4 py-2 text-sm font-light text-zinc-400 hover:text-zinc-300 transition-colors">
-							Chat
+							New Chat
 						</a>
 						<SignOutButton>
 							<Button
