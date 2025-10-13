@@ -47,8 +47,8 @@ A Retrieval-Augmented Generation (RAG) chatbot powered by Next.js and Google Gem
 
 1.  **Clone the repo:**
     ```bash
-    git clone [https://github.com/moroii69/rag-bash-a.git](https://github.com/moroii69/rag-bash-a.git)
-    cd rag-bash-A
+    git clone https://github.com/moroii69/rag-bash-a.git
+    cd rag-bash-a
     ```
 
 2.  **Install dependencies:**
