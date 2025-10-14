@@ -9,71 +9,66 @@ import { Button } from "./ui/button";
 
 export const Navigation = () => {
   return (
-    <nav className="border-b border-zinc-800/50 bg-black/40 backdrop-blur-sm">
-      <div className="flex container h-16 items-center justify-between px-4 mx-auto">
-        <a
-          href="/"
-          className="text-2xl font-light tracking-tight transition-opacity hover:opacity-80"
-        >
-          <span className="bg-gradient-to-r from-white/80 to-white/60 bg-clip-text text-transparent">
-            bash
-          </span>
-          <span className="bg-gradient-to-r from-[#F48120]/60 to-[#F48120]/30 bg-clip-text text-transparent">
-            -A
-          </span>
-        </a>
+    <nav className="border-b border-zinc-900">
+      <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="flex items-center justify-between">
+          <a
+            href="/"
+            className="text-white hover:text-zinc-400 transition-colors"
+          >
+            <span className="text-lg font-light">bash-A</span>
+          </a>
 
-        <div className="flex items-center gap-2">
-          <SignedOut>
-            <SignInButton mode="modal">
-              <Button
-                variant="ghost"
-                className="text-zinc-400 hover:text-zinc-300 hover:bg-zinc-900/60 border border-transparent hover:border-zinc-800/50 transition-all text-sm font-light"
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-6 text-sm">
+              <a
+                href="/chat"
+                className="text-zinc-500 hover:text-zinc-300 transition-colors"
               >
-                Sign In
-              </Button>
-            </SignInButton>
-            <SignUpButton mode="modal">
-              <Button className="bg-zinc-900/60 text-white border border-zinc-800 hover:border-[#F48120]/40 hover:bg-zinc-800/60 transition-all text-sm font-light">
-                Sign Up
-              </Button>
-            </SignUpButton>
-          </SignedOut>
+                Chat
+              </a>
+              <a
+                href="/how-it-works"
+                className="text-zinc-500 hover:text-zinc-300 transition-colors"
+              >
+                How It Works
+              </a>
+              <a
+                href="/terms"
+                className="text-zinc-500 hover:text-zinc-300 transition-colors"
+              >
+                Terms
+              </a>
+              <a
+                href="/privacy-policy"
+                className="text-zinc-500 hover:text-zinc-300 transition-colors"
+              >
+                Privacy
+              </a>
+            </div>
+            <div className="flex items-center gap-4 border-l border-zinc-800 pl-6">
+              <SignedOut>
+                <SignInButton>
+                  <button className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors cursor-pointer">
+                    Sign In
+                  </button>
+                </SignInButton>
+                <SignUpButton>
+                  <button className="text-sm text-white hover:text-zinc-300 transition-colors cursor-pointer ml-4">
+                    Sign Up
+                  </button>
+                </SignUpButton>
+              </SignedOut>
 
-          <SignedIn>
-            <a
-              href="/chat"
-              className="flex items-center gap-2 px-4 py-2 text-sm font-light text-zinc-400 hover:text-zinc-300 transition-colors"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="inline-block"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
-                <path d="M9 12h6" />
-                <path d="M12 9v6" />
-              </svg>
-              New Chat
-            </a>
-
-            <SignOutButton>
-              <Button
-                variant="ghost"
-                className="text-zinc-400 hover:text-red-400 hover:bg-zinc-900/60 border border-transparent hover:border-zinc-800/50 transition-all text-sm font-light"
-              >
-                Sign Out
-              </Button>
-            </SignOutButton>
-          </SignedIn>
+              <SignedIn>
+                <SignOutButton>
+                  <button className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors cursor-pointer">
+                    Sign Out
+                  </button>
+                </SignOutButton>
+              </SignedIn>
+            </div>
+          </div>
         </div>
       </div>
     </nav>

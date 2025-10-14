@@ -5,7 +5,11 @@ const isPublicRoute = createRouteMatcher([
   "/",
   "/sign-in(.*)?",
   "/sign-up(.*)?",
+  "/how-it-works",
+  "/privacy-policy",
+  "/terms",
 ]);
+
 const isAdminRoute = createRouteMatcher([
   "/upload",
   // "/admin(.*)?",
