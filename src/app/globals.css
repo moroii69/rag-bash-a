@@ -148,3 +148,7 @@ form[role="form"]:focus-within {
   outline: none !important;
   box-shadow: none !important;
 }
+
+.border {
+  border-width: 0 !important;
+}

@@ -70,17 +70,13 @@ export default function RAGChatBot() {
 
   return (
     <div className="w-full min-h-screen bg-black text-white relative">
-      {/* Subtle orange background hint */}
       <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 via-transparent to-orange-500/3 pointer-events-none" />
-      {/* Navigation */}
       <div className="relative z-10">
         <Navigation />
       </div>
 
-      {/* Main chat area */}
       <div className="relative z-10 max-w-4xl mx-auto px-4 h-[calc(100vh-4rem)] flex flex-col">
         <div className="flex flex-col h-full py-6">
-          {/* Messages */}
           <Conversation className="flex-1 mb-4 overflow-hidden">
             <ConversationContent className="h-full overflow-y-auto scrollbar-clean">
               {messages.map((message, messageIndex) => (
@@ -139,7 +135,6 @@ export default function RAGChatBot() {
                 </Fragment>
               ))}
 
-              {/* Loading indicator using AI elements */}
               {(status === "submitted" || status === "streaming") && (
                 <div className="flex w-full justify-start py-4">
                   <div className="max-w-[80%] px-3 py-2 rounded-lg bg-transparent text-zinc-300">
@@ -151,9 +146,7 @@ export default function RAGChatBot() {
             <ConversationScrollButton />
           </Conversation>
 
-          {/* Input area */}
           <div className="relative">
-            {/* Suggestions */}
             {messages.length === 0 && (
               <div className="mb-4">
                 <Suggestions className="[&>*]:bg-zinc-800/30 [&>*]:text-zinc-500 [&>*]:border-zinc-700/50 [&>*]:hover:bg-zinc-700/40 [&>*]:hover:text-zinc-300">
@@ -170,8 +163,8 @@ export default function RAGChatBot() {
 
             <PromptInput
               onSubmit={handleSubmit}
-              className="bg-zinc-900/50 border-0 hover:border-0 focus-within:border-0 focus-visible:ring-0 ring-0 rounded-lg transition-none"
-            >
+              className="bg-zinc-900/50 border border-red-500 hover:border-zinc-500 focus-within:border-zinc-500 focus-visible:ring-0 ring-0 rounded-lg transition-none"
+              >
               <PromptInputBody>
                 <PromptInputTextarea
                   value={input}
@@ -225,14 +218,14 @@ export default function RAGChatBot() {
               By messaging bash-A, you agree to our{" "}
               <a
                 href="/terms"
-                className="text-zinc-400 hover:text-zinc-300 underline"
+                className="text-zinc-400 hover:text-[#F48120]/60 underline"
               >
                 Terms
               </a>{" "}
               and have read our{" "}
               <a
                 href="/privacy-policy"
-                className="text-zinc-400 hover:text-zinc-300 underline"
+                className="text-zinc-400 hover:text-[#F48120]/60 underline"
               >
                 Privacy Policy
               </a>
