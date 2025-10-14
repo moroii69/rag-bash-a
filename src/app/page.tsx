@@ -191,11 +191,7 @@ export default function Home() {
             </button>
           )}
 
-          <a
-            href="https://github.com/moroii69/rag-bash-a"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="" target="_blank" rel="noopener noreferrer">
             <button className="group px-8 py-3 text-zinc-400 rounded border border-zinc-900 hover:text-zinc-300 hover:border-zinc-800 transition-all cursor-pointer">
               <span className="text-sm tracking-wide flex items-center gap-2">
                 Learn More

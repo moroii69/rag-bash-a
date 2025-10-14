@@ -8,13 +8,11 @@ import {
   ConversationContent,
   ConversationScrollButton,
 } from "@/components/ai-elements/conversation";
-import { Message, MessageContent } from "@/components/ai-elements/message";
 import { Response } from "@/components/ai-elements/response";
 import { Loader } from "@/components/ai-elements/loader";
 import {
   PromptInput,
   PromptInputBody,
-  PromptInputButton,
   type PromptInputMessage,
   PromptInputSpeechButton,
   PromptInputSubmit,
@@ -25,11 +23,6 @@ import {
 import { Suggestion, Suggestions } from "@/components/ai-elements/suggestion";
 import { RefreshCcwIcon, CopyIcon, GlobeIcon } from "lucide-react";
 import { nanoid } from "nanoid";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 const suggestions: { key: string; value: string }[] = [
   {
@@ -69,16 +62,29 @@ export default function RAGChatBot() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-black text-white relative">
-      <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 via-transparent to-orange-500/3 pointer-events-none" />
+    <div className="w-full min-h-screen bg-background text-foreground">
+      {/* Keep Navigation, but remove the decorative gradient overlay */}
       <div className="relative z-10">
         <Navigation />
       </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 h-[calc(100vh-4rem)] flex flex-col">
-        <div className="flex flex-col h-full py-6">
-          <Conversation className="flex-1 mb-4 overflow-hidden">
-            <ConversationContent className="h-full overflow-y-auto scrollbar-clean">
+      <header className="relative z-10 max-w-4xl mx-auto px-4 pt-8 pb-4">
+        <h1 className="text-balance text-2xl md:text-3xl font-semibold tracking-tight">
+          Chat
+        </h1>
+        <p className="mt-2 text-sm md:text-base text-muted-foreground">
+          Ask questions and get answers in real time. Your latest messages
+          appear below.
+        </p>
+      </header>
+
+      <main
+        role="main"
+        className="relative z-10 max-w-4xl mx-auto px-4 h-[calc(100vh-10rem)] flex flex-col"
+      >
+        <div className="flex flex-col h-full py-4 md:py-6">
+          <Conversation className="flex-1 mb-4 overflow-hidden rounded-lg border border-border bg-card">
+            <ConversationContent className="h-full overflow-y-auto p-3 md:p-6 space-y-4 scrollbar-clean">
               {messages.map((message, messageIndex) => (
                 <Fragment key={message.id}>
                   {message.parts.map((part, i) => {
@@ -86,38 +92,41 @@ export default function RAGChatBot() {
                       case "text":
                         const isLastMessage =
                           messageIndex === messages.length - 1;
-
                         return (
                           <Fragment key={`${message.id}-${i}`}>
                             {message.role === "user" ? (
-                              <div className="flex w-full py-4 justify-end">
-                                <div className="px-3 py-2 rounded-lg bg-zinc-800/30 text-zinc-300 max-w-[60%]">
+                              <div className="flex w-full justify-end">
+                                <div className="px-4 py-2 rounded-xl bg-secondary text-foreground/90 border border-border max-w-[68%] md:max-w-[60%] text-sm leading-relaxed">
                                   {part.text}
                                 </div>
                               </div>
                             ) : (
-                              <div className="flex w-full py-2 justify-start">
-                                <div className="max-w-[80%]">
-                                  <Response>{part.text}</Response>
+                              <div className="flex w-full justify-start">
+                                <div className="max-w-[85%] md:max-w-[70%]">
+                                  <div className="rounded-xl bg-card text-foreground border border-border">
+                                    <Response>{part.text}</Response>
+                                  </div>
                                   {isLastMessage && (
-                                    <div className="flex justify-start gap-4 mt-1">
+                                    <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
                                       <button
                                         onClick={() => regenerate()}
-                                        className="text-xs text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/20 px-2 py-1 rounded transition-colors cursor-pointer"
+                                        aria-label="Regenerate response"
+                                        className="inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-secondary hover:text-foreground transition-colors"
                                       >
-                                        <RefreshCcwIcon className="size-3 inline mr-1" />
-                                        Regenerate
+                                        <RefreshCcwIcon className="size-3" />
+                                        <span>Regenerate</span>
                                       </button>
                                       <button
                                         onClick={() => handleCopy(part.text)}
-                                        className="text-xs text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/20 px-2 py-1 rounded transition-colors cursor-pointer"
+                                        aria-label="Copy response"
+                                        className="inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-secondary hover:text-foreground transition-colors"
                                       >
                                         {copiedText ? (
                                           <span>{copiedText}</span>
                                         ) : (
                                           <>
-                                            <CopyIcon className="size-3 inline mr-1" />
-                                            Copy
+                                            <CopyIcon className="size-3" />
+                                            <span>Copy</span>
                                           </>
                                         )}
                                       </button>
@@ -136,8 +145,8 @@ export default function RAGChatBot() {
               ))}
 
               {(status === "submitted" || status === "streaming") && (
-                <div className="flex w-full justify-start py-4">
-                  <div className="max-w-[80%] px-3 py-2 rounded-lg bg-transparent text-zinc-300">
+                <div className="flex w-full justify-start">
+                  <div className="max-w-[85%] md:max-w-[70%] px-3 py-2 rounded-xl bg-muted text-foreground/80 border border-border">
                     <Loader />
                   </div>
                 </div>
@@ -149,7 +158,7 @@ export default function RAGChatBot() {
           <div className="relative">
             {messages.length === 0 && (
               <div className="mb-4">
-                <Suggestions className="[&>*]:bg-zinc-800/30 [&>*]:text-zinc-500 [&>*]:border-zinc-700/50 [&>*]:hover:bg-zinc-700/40 [&>*]:hover:text-zinc-300">
+                <Suggestions className="[&>*]:bg-secondary [&>*]:text-muted-foreground [&>*]:border-border [&>*]:hover:bg-muted/70 [&>*]:hover:text-foreground">
                   {suggestions.map((suggestion) => (
                     <Suggestion
                       key={suggestion.key}
@@ -163,22 +172,23 @@ export default function RAGChatBot() {
 
             <PromptInput
               onSubmit={handleSubmit}
-              className="bg-zinc-900/50 border border-red-500 hover:border-zinc-500 focus-within:border-zinc-500 focus-visible:ring-0 ring-0 rounded-lg transition-none"
+              className="bg-card border border-border focus-within:ring-2 focus-within:ring-ring rounded-xl transition-colors"
             >
               <PromptInputBody>
                 <PromptInputTextarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Type your message..."
-                  className="bg-transparent text-white placeholder:text-zinc-500 resize-none min-h-[48px] max-h-32 outline-none"
+                  aria-label="Message"
+                  className="bg-transparent text-foreground placeholder:text-muted-foreground resize-none min-h-[48px] max-h-40 outline-none text-sm md:text-base leading-relaxed"
                 />
               </PromptInputBody>
 
-              <PromptInputToolbar className="border-t border-zinc-800/50 bg-zinc-900/30">
+              <PromptInputToolbar className="border-t border-border bg-muted/50">
                 <PromptInputTools>
                   <div className="flex items-center gap-2">
                     <div
-                      className="opacity-50 relative cursor-not-allowed"
+                      className="opacity-60 relative cursor-not-allowed"
                       title="Coming soon"
                     >
                       <PromptInputSpeechButton
@@ -190,13 +200,13 @@ export default function RAGChatBot() {
 
                   <div className="flex items-center gap-2">
                     <div
-                      className="opacity-50 flex items-center gap-2 px-3 py-2 text-sm text-zinc-400 cursor-not-allowed relative"
+                      className="opacity-60 flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground cursor-not-allowed relative"
                       title="Coming soon"
                     >
                       <GlobeIcon size={16} />
                       <span>Search</span>
                     </div>
-                    <span className="text-xs text-orange-500/30">
+                    <span className="text-xs text-muted-foreground">
                       Coming soon
                     </span>
                   </div>
@@ -209,23 +219,20 @@ export default function RAGChatBot() {
                     status === "streaming"
                   }
                   status={status}
-                  className="text-zinc-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                  className="text-muted-foreground hover:text-foreground disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 />
               </PromptInputToolbar>
             </PromptInput>
 
-            <p className="text-xs text-zinc-600 text-center mt-3">
+            <p className="text-xs text-muted-foreground text-center mt-3">
               By messaging bash-A, you agree to our{" "}
-              <a
-                href="/terms"
-                className="text-zinc-400 hover:text-[#F48120]/60 underline"
-              >
+              <a href="/terms" className="underline hover:text-foreground">
                 Terms
               </a>{" "}
               and have read our{" "}
               <a
                 href="/privacy-policy"
-                className="text-zinc-400 hover:text-[#F48120]/60 underline"
+                className="underline hover:text-foreground"
               >
                 Privacy Policy
               </a>
@@ -233,7 +240,7 @@ export default function RAGChatBot() {
             </p>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

@@ -5,56 +5,58 @@ import {
   SignedIn,
   SignedOut,
 } from "@clerk/nextjs";
-import { Button } from "./ui/button";
 
 export const Navigation = () => {
   return (
-    <nav className="border-b border-zinc-900">
-      <div className="max-w-7xl mx-auto px-6 py-4">
+    <nav className="sticky top-0 z-50 border-b border-border bg-card/80 backdrop-blur supports-[backdrop-filter]:bg-card/60">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
         <div className="flex items-center justify-between">
           <a
             href="/"
-            className="text-white hover:text-zinc-400 transition-colors"
+            className="text-foreground hover:text-foreground/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded"
           >
-            <span className="text-lg font-light">bash-A</span>
+            <span className="text-lg font-semibold tracking-tight">bash-A</span>
           </a>
 
           <div className="flex items-center gap-6">
-            <div className="flex items-center gap-6 text-sm">
+            {/* primary nav */}
+            <div className="hidden md:flex items-center gap-6 text-sm">
               <a
                 href="/chat"
-                className="text-zinc-500 hover:text-zinc-300 transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded"
               >
                 Chat
               </a>
               <a
                 href="/how-it-works"
-                className="text-zinc-500 hover:text-zinc-300 transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded"
               >
                 How It Works
               </a>
               <a
                 href="/terms"
-                className="text-zinc-500 hover:text-zinc-300 transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded"
               >
                 Terms
               </a>
               <a
                 href="/privacy-policy"
-                className="text-zinc-500 hover:text-zinc-300 transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded"
               >
                 Privacy
               </a>
             </div>
-            <div className="flex items-center gap-4 border-l border-zinc-800 pl-6">
+
+            {/* auth actions */}
+            <div className="flex items-center gap-4 md:border-l md:border-border md:pl-6">
               <SignedOut>
                 <SignInButton>
-                  <button className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors cursor-pointer">
+                  <button className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded">
                     Sign In
                   </button>
                 </SignInButton>
                 <SignUpButton>
-                  <button className="text-sm text-white hover:text-zinc-300 transition-colors cursor-pointer ml-4">
+                  <button className="text-sm bg-primary text-primary-foreground hover:bg-primary/90 transition-colors cursor-pointer px-3 py-1.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background">
                     Sign Up
                   </button>
                 </SignUpButton>
@@ -62,7 +64,7 @@ export const Navigation = () => {
 
               <SignedIn>
                 <SignOutButton>
-                  <button className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors cursor-pointer">
+                  <button className="text-sm text-foreground hover:text-foreground/80 transition-colors cursor-pointer bg-secondary px-3 py-1.5 rounded-md border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background">
                     Sign Out
                   </button>
                 </SignOutButton>

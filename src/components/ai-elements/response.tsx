@@ -2,32 +2,17 @@
 
 import { cn } from "@/lib/utils";
 import { type ComponentProps, memo } from "react";
-import { Streamdown, StreamdownProps } from "streamdown";
+import { Streamdown } from "streamdown";
 
-const InlineCode = (props: ComponentProps<"code">) => (
-  <code className="text-black" {...props} />
-);
-
-const CustomLink = (props: ComponentProps<"a">) => (
-  <a
-    className="text-blue-400 hover:text-blue-300 underline cursor-pointer"
-    {...props}
-  />
-);
-
-const customComponents: StreamdownProps["components"] = {
-  code: InlineCode,
-  a: CustomLink,
-};
+type ResponseProps = ComponentProps<typeof Streamdown>;
 
 export const Response = memo(
-  ({ className, components, ...props }: StreamdownProps) => (
+  ({ className, ...props }: ResponseProps) => (
     <Streamdown
       className={cn(
-        "size-full text-gray-300 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0",
+        "size-full [&>*:first-child]:mt-0 [&>*:last-child]:mb-0",
         className,
       )}
-      components={{ ...components, ...customComponents }}
       {...props}
     />
   ),

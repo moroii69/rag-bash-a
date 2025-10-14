@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/performance/noImgElement: "AI Elements is framework agnostic" */
+
 "use client";
 
 import { Button } from "@/components/ui/button";
