@@ -173,7 +173,7 @@ export default function Home() {
           className="flex flex-col sm:flex-row gap-4 items-center justify-center"
         >
           {!isSignedIn ? (
-            <SignUpButton mode="modal">
+            <SignUpButton>
               <button className="px-8 py-3 bg-zinc-900/60 text-white rounded border border-zinc-800 hover:border-[#F48120]/40 transition-colors cursor-pointer">
                 <span className="flex items-center gap-2 text-sm tracking-wide group-hover:text-[#F48120]/90">
                   Get Started
