@@ -164,7 +164,7 @@ export default function RAGChatBot() {
             <PromptInput
               onSubmit={handleSubmit}
               className="bg-zinc-900/50 border border-red-500 hover:border-zinc-500 focus-within:border-zinc-500 focus-visible:ring-0 ring-0 rounded-lg transition-none"
-              >
+            >
               <PromptInputBody>
                 <PromptInputTextarea
                   value={input}

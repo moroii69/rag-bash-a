@@ -9,9 +9,9 @@ const InlineCode = (props: ComponentProps<"code">) => (
 );
 
 const CustomLink = (props: ComponentProps<"a">) => (
-  <a 
-    className="text-blue-400 hover:text-blue-300 underline cursor-pointer" 
-    {...props} 
+  <a
+    className="text-blue-400 hover:text-blue-300 underline cursor-pointer"
+    {...props}
   />
 );
 

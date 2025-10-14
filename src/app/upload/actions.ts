@@ -25,7 +25,7 @@ export async function processPdfFile(formData: FormData) {
 
     logger.info(
       { fileName: file.name, fileSize: file.size },
-      "PDF file received"
+      "PDF file received",
     );
 
     const bytes = await file.arrayBuffer();
@@ -62,7 +62,7 @@ export async function processPdfFile(formData: FormData) {
       await db.insert(documents).values(records);
       logger.info(
         { chunkCount: records.length },
-        "PDF chunks inserted into DB"
+        "PDF chunks inserted into DB",
       );
     } catch (dbError) {
       logger.error({ dbError }, "Neon DB insert failed");
