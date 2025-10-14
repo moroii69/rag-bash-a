@@ -18,7 +18,7 @@ export default function Home() {
 
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 1000);
 
     interface MousePosition {
       x: number;

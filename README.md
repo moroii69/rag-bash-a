@@ -12,24 +12,24 @@ A Retrieval-Augmented Generation (RAG) chatbot powered by Next.js and Google Gem
 
 ## Features
 
--   **Role-Based Access**: Differentiates between `admin` and `user` roles.
--   **Admin-Only PDF Ingestion**: Admins can upload and process PDF files to build the knowledge base.
--   **RAG-Powered Chat**: The LLM uses a vector search over the document knowledge base to generate relevant answers.
--   **Streaming UI**: Responses are streamed token-by-token for a fluid chat experience.
--   **Vector Search**: Uses Neon serverless Postgres with an HNSW index for efficient semantic search.
+- **Role-Based Access**: Differentiates between `admin` and `user` roles.
+- **Admin-Only PDF Ingestion**: Admins can upload and process PDF files to build the knowledge base.
+- **RAG-Powered Chat**: The LLM uses a vector search over the document knowledge base to generate relevant answers.
+- **Streaming UI**: Responses are streamed token-by-token for a fluid chat experience.
+- **Vector Search**: Uses Neon serverless Postgres with an HNSW index for efficient semantic search.
 
 ---
 
 ## Tech Stack
 
--   **Framework**: Next.js 15 (App Router)
--   **Language**: TypeScript
--   **Authentication**: Clerk (handles user roles)
--   **Database**: Neon Serverless Postgres + `pgvector`
--   **ORM**: Drizzle ORM
--   **AI & Embeddings**: Google Gemini (`gemini-2.5-flash-lite`, `text-embedding-004`) via Vercel AI SDK
--   **Styling**: Tailwind CSS
--   **UI**: Shadcn UI & Vercel AI Elements
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Authentication**: Clerk (handles user roles)
+- **Database**: Neon Serverless Postgres + `pgvector`
+- **ORM**: Drizzle ORM
+- **AI & Embeddings**: Google Gemini (`gemini-2.5-flash-lite`, `text-embedding-004`) via Vercel AI SDK
+- **Styling**: Tailwind CSS
+- **UI**: Shadcn UI & Vercel AI Elements
 
 ---
 
@@ -37,35 +37,39 @@ A Retrieval-Augmented Generation (RAG) chatbot powered by Next.js and Google Gem
 
 ### Prerequisites
 
--   Node.js (v18+)
--   Bun
--   Neon Account & Database URL
--   Clerk Account & Credentials
--   Google AI API Key
+- Node.js (v18+)
+- Bun
+- Neon Account & Database URL
+- Clerk Account & Credentials
+- Google AI API Key
 
 ### Installation
 
 1.  **Clone the repo:**
+
     ```bash
     git clone https://github.com/moroii69/rag-bash-a.git
     cd rag-bash-a
     ```
 
 2.  **Install dependencies:**
+
     ```bash
     bun install
     ```
 
 3.  **Configure environment:**
-    -   Copy `.env.example` to `.env.local`.
-    -   Add your credentials for Neon, Clerk, and Google AI.
+    - Copy `.env.example` to `.env.local`.
+    - Add your credentials for Neon, Clerk, and Google AI.
+
     ```bash
     cp .env.example .env.local
     ```
 
 4.  **Sync database schema:**
-    -   Ensure the `pgvector` extension is enabled on your Neon database.
-    -   Push the schema.
+    - Ensure the `pgvector` extension is enabled on your Neon database.
+    - Push the schema.
+
     ```bash
     bun run db:push
     ```
@@ -93,6 +97,7 @@ CLERK_SECRET_KEY="..."
 # Google AI
 GOOGLE_GENERATIVE_AI_API_KEY="..."
 ```
+
 ---
 
 ## Project Structure
@@ -121,15 +126,15 @@ src
 
 The project includes integration tests and CI checks for linting, database connectivity, and build steps.
 
--   [![Core Setup](https://img.shields.io/badge/Core%20Setup-Passing-green?style=flat-square)](https://github.com/moroii69/rag-bash-a/actions)
--   [![DB Check](https://img.shields.io/badge/DB%20Check-Passing-green?style=flat-square)](https://github.com/moroii69/rag-bash-a/actions)
--   [![Lint](https://img.shields.io/badge/Lint-Passing-green?style=flat-square)](https://github.com/moroii69/rag-bash-a/actions)
+- [![Core Setup](https://img.shields.io/badge/Core%20Setup-Passing-green?style=flat-square)](https://github.com/moroii69/rag-bash-a/actions)
+- [![DB Check](https://img.shields.io/badge/DB%20Check-Passing-green?style=flat-square)](https://github.com/moroii69/rag-bash-a/actions)
+- [![Lint](https://img.shields.io/badge/Lint-Passing-green?style=flat-square)](https://github.com/moroii69/rag-bash-a/actions)
 
 ---
 
 ## Scripts
 
--   `bun run dev`: Start the dev server.
--   `bun run build`: Create a production build.
--   `bun run db:push`: Push Drizzle schema to the database.
--   `bun run lint`: Run the Biome linter.
+- `bun run dev`: Start the dev server.
+- `bun run build`: Create a production build.
+- `bun run db:push`: Push Drizzle schema to the database.
+- `bun run lint`: Run the Biome linter.

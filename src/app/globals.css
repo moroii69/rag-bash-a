@@ -122,16 +122,10 @@
 }
 .scrollbar-clean {
   overflow-x: hidden;
-
-  /* Chrome, Safari, Opera */
   &::-webkit-scrollbar {
     display: none;
   }
-
-  /* IE, Edge */
   -ms-overflow-style: none;
-
-  /* Firefox */
   scrollbar-width: none;
 }
 
