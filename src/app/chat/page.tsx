@@ -62,27 +62,16 @@ export default function RAGChatBot() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-background text-foreground">
-      {/* Keep Navigation, but remove the decorative gradient overlay */}
+    <div className="w-full h-screen bg-background text-foreground flex flex-col">
       <div className="relative z-10">
         <Navigation />
       </div>
 
-      <header className="relative z-10 max-w-4xl mx-auto px-4 pt-8 pb-4">
-        <h1 className="text-balance text-2xl md:text-3xl font-semibold tracking-tight">
-          Chat
-        </h1>
-        <p className="mt-2 text-sm md:text-base text-muted-foreground">
-          Ask questions and get answers in real time. Your latest messages
-          appear below.
-        </p>
-      </header>
-
       <main
         role="main"
-        className="relative z-10 max-w-4xl mx-auto px-4 h-[calc(100vh-10rem)] flex flex-col"
+        className="relative z-10 max-w-4xl mx-auto px-4 flex-1 w-full min-w-0 flex flex-col"
       >
-        <div className="flex flex-col h-full py-4 md:py-6">
+        <div className="flex flex-col flex-1 pb-4 md:pb-6 pt-4 md:pt-6">
           <Conversation className="flex-1 mb-4 overflow-hidden rounded-lg border border-border bg-card">
             <ConversationContent className="h-full overflow-y-auto p-3 md:p-6 space-y-4 scrollbar-clean">
               {messages.map((message, messageIndex) => (

@@ -120,14 +120,14 @@
     @apply bg-background text-foreground;
   }
 }
-.scrollbar-clean {
+/* .scrollbar-clean {
   overflow-x: hidden;
   &::-webkit-scrollbar {
     display: none;
   }
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
+} */
 
 form.border {
   border-width: 0 !important;
@@ -151,4 +151,22 @@ form[role="form"]:focus-within {
 
 .border {
   border-width: 0 !important;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 4px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
 }

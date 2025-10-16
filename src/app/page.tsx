@@ -95,7 +95,7 @@ export default function Home() {
         transition={{ duration: 0.8, delay: 1.2 }}
         className="absolute top-6 left-6 z-10 flex items-center gap-4 text-xs text-zinc-600"
       >
-        <span>v1.0.3</span>
+        <span>v1.0.4</span>
         <span className="text-zinc-800">|</span>
         <span>no data stored</span>
       </motion.div>
