@@ -1,15 +1,14 @@
 "use client";
-
 import { useState } from "react";
 import { processPdfFile } from "./actions";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Loader2 } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function PDFUpload() {
   const [isLoading, setIsLoading] = useState(false);
+  const [fileName, setFileName] = useState<string>("");
   const [message, setMessage] = useState<{
     type: "error" | "success";
     text: string;
@@ -19,13 +18,13 @@ export default function PDFUpload() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    setFileName(file.name);
     setIsLoading(true);
     setMessage(null);
 
     try {
       const formData = new FormData();
       formData.append("pdf", file);
-
       const result = await processPdfFile(formData);
 
       if (result.success) {
@@ -33,7 +32,10 @@ export default function PDFUpload() {
           type: "success",
           text: result.message || "PDF processed successfully",
         });
-        e.target.value = "";
+        setTimeout(() => {
+          e.target.value = "";
+          setFileName("");
+        }, 3000);
       } else {
         setMessage({
           type: "error",
@@ -51,48 +53,77 @@ export default function PDFUpload() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-          PDF Upload
-        </h1>
-        <Card className="mb-6">
-          <CardContent className="pt-6">
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="pdf-upload">Upload PDF File</Label>
-                <Input
-                  id="pdf-upload"
-                  type="file"
-                  accept=".pdf"
-                  onChange={handleFileUpload}
-                  disabled={isLoading}
-                  className="mt-2"
-                />
-              </div>
+    <div className="min-h-screen bg-white flex items-center justify-center p-8">
+      <div className="w-full max-w-md space-y-12">
+        <div className="space-y-2">
+          <h1 className="text-2xl font-light tracking-tight text-black">
+            Upload PDF
+          </h1>
+          <p className="text-sm text-gray-500 font-light">
+            Select a file to process
+          </p>
+        </div>
 
-              {isLoading && (
-                <div className="flex items-center gap-2">
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                  <span className="text-muted-foreground">
-                    Processing PDF...
-                  </span>
-                </div>
-              )}
+        <div className="space-y-8">
+          <div className="space-y-4">
+            <Label
+              htmlFor="pdf-upload"
+              className="text-sm font-normal text-black"
+            >
+              File
+            </Label>
 
-              {message && (
-                <Alert
-                  variant={message.type === "error" ? "destructive" : "default"}
-                >
-                  <AlertTitle>
-                    {message.type === "error" ? "Error!" : "Success!"}
-                  </AlertTitle>
-                  <AlertDescription>{message.text}</AlertDescription>
-                </Alert>
-              )}
+            <div className="relative">
+              <Input
+                id="pdf-upload"
+                type="file"
+                accept=".pdf"
+                onChange={handleFileUpload}
+                disabled={isLoading}
+                className="hidden"
+              />
+              <label
+                htmlFor="pdf-upload"
+                className={`
+                  block w-full h-32 border border-gray-300 rounded
+                  flex items-center justify-center
+                  transition-colors duration-150
+                  ${
+                    isLoading
+                      ? "bg-gray-50 cursor-not-allowed"
+                      : "bg-white hover:bg-gray-50 cursor-pointer"
+                  }
+                `}
+              >
+                <span className="text-sm text-gray-600 font-light">
+                  {fileName || "Choose file"}
+                </span>
+              </label>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+
+          {isLoading && (
+            <p className="text-sm text-gray-500 font-light">Processing...</p>
+          )}
+
+          {message && (
+            <Alert
+              variant={message.type === "error" ? "destructive" : "default"}
+              className={`
+                border rounded
+                ${
+                  message.type === "success"
+                    ? "bg-white border-black text-black"
+                    : "bg-white border-black text-black"
+                }
+              `}
+            >
+              <AlertDescription className="text-sm font-light">
+                {message.text}
+              </AlertDescription>
+            </Alert>
+          )}
+        </div>
       </div>
     </div>
   );
