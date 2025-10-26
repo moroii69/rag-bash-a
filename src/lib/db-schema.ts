@@ -7,12 +7,7 @@ export const documents = pgTable(
     content: text("content").notNull(),
     embedding: vector("embedding", { dimensions: 768 }),
   },
-  (table) => [
-    index("embeddingIndex").using(
-      "hnsw",
-      table.embedding.op("vector_cosine_ops"),
-    ),
-  ],
+  (table) => [index("embeddingIndex").using("hnsw", table.embedding.op("vector_cosine_ops"))],
 );
 
 export type InsertDocument = typeof documents.$inferInsert;

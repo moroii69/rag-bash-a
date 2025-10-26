@@ -1,11 +1,4 @@
-import {
-  streamText,
-  UIMessage,
-  convertToModelMessages,
-  tool,
-  InferUITools,
-  stepCountIs,
-} from "ai";
+import { streamText, UIMessage, convertToModelMessages, tool, InferUITools, stepCountIs } from "ai";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { searchDocuments } from "@/lib/search";
@@ -65,9 +58,7 @@ const executeSearchKnowledgeBase = async ({ query }: { query: string }) => {
       return "No relevant information found in internal database. Consider using Google Search.";
     }
 
-    return results
-      .map((r, i) => `Document ${i + 1}: ${r.content}`)
-      .join("\n\n");
+    return results.map((r, i) => `Document ${i + 1}: ${r.content}`).join("\n\n");
   } catch (error) {
     console.error("Knowledge base search failed:", error);
     throw new Error("Knowledge base search failed during execution");
@@ -108,14 +99,11 @@ export async function POST(req: Request) {
     return result.toUIMessageStreamResponse();
   } catch (error) {
     console.error("Error processing POST request:", error);
-    return new Response(
-      "An error occurred while streaming the chat response.",
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "text/plain",
-        },
+    return new Response("An error occurred while streaming the chat response.", {
+      status: 500,
+      headers: {
+        "Content-Type": "text/plain",
       },
-    );
+    });
   }
 }

@@ -9,39 +9,29 @@ export default function HowItWorks() {
 
       <main className="max-w-4xl mx-auto px-6 py-16">
         <div className="mb-16">
-          <h1 className="text-4xl font-light mb-4 text-foreground">
-            How It Works
-          </h1>
+          <h1 className="text-4xl font-light mb-4 text-foreground">How It Works</h1>
           <p className="text-muted-foreground text-sm">
             RAG-powered semantic search with intelligent fallback
           </p>
         </div>
 
         <section className="mb-16">
-          <h2 className="text-2xl font-light mb-6 text-foreground">
-            Core Process
-          </h2>
+          <h2 className="text-2xl font-light mb-6 text-foreground">Core Process</h2>
 
           <div className="space-y-8">
             <div className="border-l-2 border-border pl-6">
-              <h3 className="text-lg font-light mb-2 text-foreground/90">
-                01. Knowledge Upload
-              </h3>
+              <h3 className="text-lg font-light mb-2 text-foreground/90">01. Knowledge Upload</h3>
               <p className="text-muted-foreground leading-relaxed text-sm">
-                Admins upload PDFs. System parses content, chunks it, and stores
-                in Neon database. Each chunk gets a 768-dimensional vector
-                embedding via Google AI.
+                Admins upload PDFs. System parses content, chunks it, and stores in Neon database.
+                Each chunk gets a 768-dimensional vector embedding via Google AI.
               </p>
             </div>
 
             <div className="border-l-2 border-border pl-6">
-              <h3 className="text-lg font-light mb-2 text-foreground/90">
-                02. Query Processing
-              </h3>
+              <h3 className="text-lg font-light mb-2 text-foreground/90">02. Query Processing</h3>
               <p className="text-muted-foreground leading-relaxed text-sm">
-                Your message converts to an embedding. HNSW index performs
-                cosine similarity search across stored vectors. Top relevant
-                chunks retrieved.
+                Your message converts to an embedding. HNSW index performs cosine similarity search
+                across stored vectors. Top relevant chunks retrieved.
               </p>
             </div>
 
@@ -50,28 +40,23 @@ export default function HowItWorks() {
                 03. Response Generation
               </h3>
               <p className="text-muted-foreground leading-relaxed text-sm">
-                Retrieved documents feed into LLM as context. AI generates
-                response grounded in your data. Streams in real-time for
-                responsive experience.
+                Retrieved documents feed into LLM as context. AI generates response grounded in your
+                data. Streams in real-time for responsive experience.
               </p>
             </div>
 
             <div className="border-l-2 border-border pl-6">
-              <h3 className="text-lg font-light mb-2 text-foreground/90">
-                04. Web Fallback
-              </h3>
+              <h3 className="text-lg font-light mb-2 text-foreground/90">04. Web Fallback</h3>
               <p className="text-muted-foreground leading-relaxed text-sm">
-                If knowledge base lacks info, system automatically searches the
-                web. Ensures helpful answers beyond institutional data.
+                If knowledge base lacks info, system automatically searches the web. Ensures helpful
+                answers beyond institutional data.
               </p>
             </div>
           </div>
         </section>
 
         <section className="mb-16">
-          <h2 className="text-2xl font-light mb-6 text-foreground">
-            Technology Stack
-          </h2>
+          <h2 className="text-2xl font-light mb-6 text-foreground">Technology Stack</h2>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="border border-border p-4 bg-card">
@@ -83,9 +68,7 @@ export default function HowItWorks() {
               <p className="text-foreground/80 text-sm">Neon + Drizzle ORM</p>
             </div>
             <div className="border border-border p-4 bg-card">
-              <p className="text-xs text-muted-foreground mb-1">
-                Vector Search
-              </p>
+              <p className="text-xs text-muted-foreground mb-1">Vector Search</p>
               <p className="text-foreground/80 text-sm">HNSW Index</p>
             </div>
             <div className="border border-border p-4 bg-card">
@@ -93,24 +76,18 @@ export default function HowItWorks() {
               <p className="text-foreground/80 text-sm">Google AI SDK</p>
             </div>
             <div className="border border-border p-4 bg-card">
-              <p className="text-xs text-muted-foreground mb-1">
-                Authentication
-              </p>
+              <p className="text-xs text-muted-foreground mb-1">Authentication</p>
               <p className="text-foreground/80 text-sm">Clerk</p>
             </div>
             <div className="border border-border p-4 bg-card">
               <p className="text-xs text-muted-foreground mb-1">Embeddings</p>
-              <p className="text-foreground/80 text-sm">
-                768-dimensional vectors
-              </p>
+              <p className="text-foreground/80 text-sm">768-dimensional vectors</p>
             </div>
           </div>
         </section>
 
         <section className="mb-16">
-          <h2 className="text-2xl font-light mb-6 text-foreground">
-            Key Features
-          </h2>
+          <h2 className="text-2xl font-light mb-6 text-foreground">Key Features</h2>
 
           <div className="space-y-3">
             <div className="flex items-start gap-3">
@@ -147,9 +124,7 @@ export default function HowItWorks() {
         </section>
 
         <section className="mb-16">
-          <h2 className="text-2xl font-light mb-6 text-foreground">
-            Data Flow
-          </h2>
+          <h2 className="text-2xl font-light mb-6 text-foreground">Data Flow</h2>
 
           <div className="border border-border p-6 bg-card">
             <div className="flex items-center gap-4 text-sm text-muted-foreground">

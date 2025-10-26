@@ -132,9 +132,7 @@ export default function Home() {
           className="inline-flex items-center gap-2 mb-12 px-3 py-1 border border-zinc-800 rounded bg-zinc-950/50 backdrop-blur-sm"
         >
           <div className="w-1.5 h-1.5 bg-[#F48120] rounded-full animate-pulse" />
-          <span className="text-zinc-500 text-xs tracking-wider uppercase">
-            Available Now
-          </span>
+          <span className="text-zinc-500 text-xs tracking-wider uppercase">Available Now</span>
         </motion.div>
 
         <motion.h1
@@ -195,9 +193,7 @@ export default function Home() {
             <button className="group px-8 py-3 text-zinc-400 rounded border border-zinc-900 hover:text-zinc-300 hover:border-zinc-800 transition-all cursor-pointer">
               <span className="text-sm tracking-wide flex items-center gap-2">
                 Learn More
-                <span className="text-zinc-600 group-hover:text-zinc-500 transition-colors">
-                  →
-                </span>
+                <span className="text-zinc-600 group-hover:text-zinc-500 transition-colors">→</span>
               </span>
             </button>
           </a>

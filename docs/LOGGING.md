@@ -3,6 +3,7 @@
 ## Log Format
 
 All logs follow this standardized format:
+
 ```
 [TIMESTAMP] [LEVEL] [CONTEXT] MESSAGE | METADATA
 ```
@@ -17,48 +18,57 @@ All logs follow this standardized format:
 ## Request Flow Logging
 
 ### 1. Request Received
+
 ```
 [INFO] [ChatAPI] Received chat request | {"requestId":"..."}
 ```
 
 ### 2. Body Parsed
+
 ```
 [INFO] [ChatAPI] Parsed request body | {"requestId":"...","messageCount":N}
 ```
 
 ### 3. Query Processing
+
 ```
 [INFO] [ChatAPI] Processing user query | {"requestId":"...","queryLength":N}
 ```
 
 ### 4. KB Search Phase
+
 ```
 [INFO] [ChatAPI] Starting knowledge base search phase | {"requestId":"...","model":"gemini-2.5-flash-lite","toolsEnabled":["searchKnowledgeBase"]}
 ```
 
 ### 5. Tool Execution
+
 ```
 [INFO] [ChatAPI] Executing knowledge base search | {"query":"..."}
 [INFO] [ChatAPI] Knowledge base search completed | {"query":"...","resultCount":N,"durationMs":N}
 ```
 
 ### 6. Step Completion
+
 ```
 [INFO] [ChatAPI] KB search step completed | {"requestId":"...","toolCalls":N,"hasText":true}
 ```
 
 ### 7. Request Completion (Success)
+
 ```
 [INFO] [ChatAPI] Request completed with knowledge base search | {"requestId":"...","model":"gemini-2.5-flash-lite","durationMs":N}
 ```
 
 ### 8. Fallback Scenario
+
 ```
 [WARN] [ChatAPI] Knowledge base search failed, falling back to web search | {"requestId":"...","error":"..."}
 [INFO] [ChatAPI] Starting web search phase | {"requestId":"...","model":"gemini-2.5-flash","toolsEnabled":["google_search"]}
 ```
 
 ### 9. Error Handling
+
 ```
 [ERROR] [ChatAPI] Request processing failed | {"requestId":"...","durationMs":N,"error":"...","stack":"..."}
 ```
@@ -66,23 +76,28 @@ All logs follow this standardized format:
 ## Monitoring Tips
 
 ### Track Request Performance
+
 Filter logs by requestId to see the full lifecycle of a request:
+
 ```bash
 grep "requestId\":\"550e8400" logs.txt
 ```
 
 ### Monitor KB Search Success Rate
+
 ```bash
 grep "Knowledge base search completed" logs.txt | wc -l
 grep "No results found in knowledge base" logs.txt | wc -l
 ```
 
 ### Identify Slow Requests
+
 ```bash
 grep "durationMs" logs.txt | sort -t: -k6 -n
 ```
 
 ### Monitor Fallback Frequency
+
 ```bash
 grep "falling back to web search" logs.txt | wc -l
 ```

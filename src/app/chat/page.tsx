@@ -79,8 +79,7 @@ export default function RAGChatBot() {
                   {message.parts.map((part, i) => {
                     switch (part.type) {
                       case "text":
-                        const isLastMessage =
-                          messageIndex === messages.length - 1;
+                        const isLastMessage = messageIndex === messages.length - 1;
                         return (
                           <Fragment key={`${message.id}-${i}`}>
                             {message.role === "user" ? (
@@ -176,10 +175,7 @@ export default function RAGChatBot() {
               <PromptInputToolbar className="border-t border-border bg-muted/50">
                 <PromptInputTools>
                   <div className="flex items-center gap-2">
-                    <div
-                      className="opacity-60 relative cursor-not-allowed"
-                      title="Coming soon"
-                    >
+                    <div className="opacity-60 relative cursor-not-allowed" title="Coming soon">
                       <PromptInputSpeechButton
                         onTranscriptionChange={setInput}
                         className="pointer-events-none"
@@ -195,18 +191,12 @@ export default function RAGChatBot() {
                       <GlobeIcon size={16} />
                       <span>Search</span>
                     </div>
-                    <span className="text-xs text-muted-foreground">
-                      Coming soon
-                    </span>
+                    <span className="text-xs text-muted-foreground">Coming soon</span>
                   </div>
                 </PromptInputTools>
 
                 <PromptInputSubmit
-                  disabled={
-                    !input.trim() ||
-                    status === "submitted" ||
-                    status === "streaming"
-                  }
+                  disabled={!input.trim() || status === "submitted" || status === "streaming"}
                   status={status}
                   className="text-muted-foreground hover:text-foreground disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 />
@@ -219,10 +209,7 @@ export default function RAGChatBot() {
                 Terms
               </a>{" "}
               and have read our{" "}
-              <a
-                href="/privacy-policy"
-                className="underline hover:text-foreground"
-              >
+              <a href="/privacy-policy" className="underline hover:text-foreground">
                 Privacy Policy
               </a>
               .

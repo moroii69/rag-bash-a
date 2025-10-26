@@ -14,9 +14,7 @@ export const Message = ({ className, from, ...props }: MessageProps) => (
       // base layout: horizontal flex with vertical alignment
       "group flex w-full items-end gap-2 py-4",
       // user messages should be right aligned, assistant left aligned
-      from === "user"
-        ? "is-user flex-row-reverse justify-end"
-        : "is-assistant justify-start",
+      from === "user" ? "is-user flex-row-reverse justify-end" : "is-assistant justify-start",
       className,
     )}
     {...props}
@@ -52,16 +50,8 @@ const messageContentVariants = cva("is-user:dark flex flex-col gap-2 text-sm", {
 export type MessageContentProps = HTMLAttributes<HTMLDivElement> &
   VariantProps<typeof messageContentVariants>;
 
-export const MessageContent = ({
-  children,
-  className,
-  variant,
-  ...props
-}: MessageContentProps) => (
-  <div
-    className={cn(messageContentVariants({ variant, className }))}
-    {...props}
-  >
+export const MessageContent = ({ children, className, variant, ...props }: MessageContentProps) => (
+  <div className={cn(messageContentVariants({ variant, className }))} {...props}>
     {children}
   </div>
 );
@@ -71,12 +61,7 @@ export type MessageAvatarProps = ComponentProps<typeof Avatar> & {
   name?: string;
 };
 
-export const MessageAvatar = ({
-  src,
-  name,
-  className,
-  ...props
-}: MessageAvatarProps) => (
+export const MessageAvatar = ({ src, name, className, ...props }: MessageAvatarProps) => (
   <Avatar className={cn("size-8 ring-1 ring-border", className)} {...props}>
     <AvatarImage alt="" className="mt-0 mb-0" src={src} />
     <AvatarFallback>{name?.slice(0, 2) || "ME"}</AvatarFallback>

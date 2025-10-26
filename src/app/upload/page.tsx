@@ -56,20 +56,13 @@ export default function PDFUpload() {
     <div className="min-h-screen bg-white flex items-center justify-center p-8">
       <div className="w-full max-w-md space-y-12">
         <div className="space-y-2">
-          <h1 className="text-2xl font-light tracking-tight text-black">
-            Upload PDF
-          </h1>
-          <p className="text-sm text-gray-500 font-light">
-            Select a file to process
-          </p>
+          <h1 className="text-2xl font-light tracking-tight text-black">Upload PDF</h1>
+          <p className="text-sm text-gray-500 font-light">Select a file to process</p>
         </div>
 
         <div className="space-y-8">
           <div className="space-y-4">
-            <Label
-              htmlFor="pdf-upload"
-              className="text-sm font-normal text-black"
-            >
+            <Label htmlFor="pdf-upload" className="text-sm font-normal text-black">
               File
             </Label>
 
@@ -102,9 +95,7 @@ export default function PDFUpload() {
             </div>
           </div>
 
-          {isLoading && (
-            <p className="text-sm text-gray-500 font-light">Processing...</p>
-          )}
+          {isLoading && <p className="text-sm text-gray-500 font-light">Processing...</p>}
 
           {message && (
             <Alert
@@ -118,9 +109,7 @@ export default function PDFUpload() {
                 }
               `}
             >
-              <AlertDescription className="text-sm font-light">
-                {message.text}
-              </AlertDescription>
+              <AlertDescription className="text-sm font-light">{message.text}</AlertDescription>
             </Alert>
           )}
         </div>

@@ -7,12 +7,8 @@ export default function PrivacyPage() {
 
       <main className="max-w-4xl mx-auto px-6 py-16">
         <div className="mb-16">
-          <h1 className="text-4xl font-light mb-4 text-foreground">
-            Privacy Policy
-          </h1>
-          <p className="text-muted-foreground text-sm">
-            Effective Date: October 13, 2025
-          </p>
+          <h1 className="text-4xl font-light mb-4 text-foreground">Privacy Policy</h1>
+          <p className="text-muted-foreground text-sm">Effective Date: October 13, 2025</p>
         </div>
 
         <section className="mb-16">
@@ -22,31 +18,24 @@ export default function PrivacyPage() {
                 1. Information We Collect
               </h2>
               <p className="text-muted-foreground leading-relaxed text-sm mb-3">
-                bash-A is designed with privacy in mind. We collect minimal
-                information necessary to provide our service:
+                bash-A is designed with privacy in mind. We collect minimal information necessary to
+                provide our service:
               </p>
               <div className="space-y-2">
                 <div className="flex items-start gap-3">
-                  <span className="text-muted-foreground/70 text-xs mt-1">
-                    →
-                  </span>
+                  <span className="text-muted-foreground/70 text-xs mt-1">→</span>
                   <p className="text-muted-foreground text-sm">
-                    Conversation logs (stored temporarily in your browser
-                    session only)
+                    Conversation logs (stored temporarily in your browser session only)
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-muted-foreground/70 text-xs mt-1">
-                    →
-                  </span>
+                  <span className="text-muted-foreground/70 text-xs mt-1">→</span>
                   <p className="text-muted-foreground text-sm">
                     Basic usage analytics (anonymous and aggregated)
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-muted-foreground/70 text-xs mt-1">
-                    →
-                  </span>
+                  <span className="text-muted-foreground/70 text-xs mt-1">→</span>
                   <p className="text-muted-foreground text-sm">
                     Technical data such as browser type and device information
                   </p>
@@ -55,13 +44,10 @@ export default function PrivacyPage() {
             </div>
 
             <div className="border-l-2 border-border pl-6">
-              <h2 className="text-2xl font-light mb-4 text-foreground">
-                2. No Data Storage
-              </h2>
+              <h2 className="text-2xl font-light mb-4 text-foreground">2. No Data Storage</h2>
               <p className="text-muted-foreground leading-relaxed text-sm">
-                We do not store your conversations or personal data on our
-                servers. All chat history is maintained locally in your browser
-                and is deleted when you close the session.
+                We do not store your conversations or personal data on our servers. All chat history
+                is maintained locally in your browser and is deleted when you close the session.
               </p>
             </div>
 
@@ -74,33 +60,21 @@ export default function PrivacyPage() {
               </p>
               <div className="space-y-2">
                 <div className="flex items-start gap-3">
-                  <span className="text-muted-foreground/70 text-xs mt-1">
-                    →
-                  </span>
-                  <p className="text-muted-foreground text-sm">
-                    Provide and maintain our service
-                  </p>
+                  <span className="text-muted-foreground/70 text-xs mt-1">→</span>
+                  <p className="text-muted-foreground text-sm">Provide and maintain our service</p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-muted-foreground/70 text-xs mt-1">
-                    →
-                  </span>
-                  <p className="text-muted-foreground text-sm">
-                    Improve user experience
-                  </p>
+                  <span className="text-muted-foreground/70 text-xs mt-1">→</span>
+                  <p className="text-muted-foreground text-sm">Improve user experience</p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-muted-foreground/70 text-xs mt-1">
-                    →
-                  </span>
+                  <span className="text-muted-foreground/70 text-xs mt-1">→</span>
                   <p className="text-muted-foreground text-sm">
                     Analyze usage patterns (anonymously)
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-muted-foreground/70 text-xs mt-1">
-                    →
-                  </span>
+                  <span className="text-muted-foreground/70 text-xs mt-1">→</span>
                   <p className="text-muted-foreground text-sm">
                     Detect and prevent technical issues
                   </p>
@@ -109,46 +83,36 @@ export default function PrivacyPage() {
             </div>
 
             <div className="border-l-2 border-border pl-6">
-              <h2 className="text-2xl font-light mb-4 text-foreground">
-                4. Third-Party Services
-              </h2>
+              <h2 className="text-2xl font-light mb-4 text-foreground">4. Third-Party Services</h2>
               <p className="text-muted-foreground leading-relaxed text-sm">
-                bash-A may use third-party services for analytics or
-                functionality. These services have their own privacy policies,
-                and we encourage you to review them.
+                bash-A may use third-party services for analytics or functionality. These services
+                have their own privacy policies, and we encourage you to review them.
               </p>
             </div>
 
             <div className="border-l-2 border-border pl-6">
-              <h2 className="text-2xl font-light mb-4 text-foreground">
-                5. Cookies
-              </h2>
+              <h2 className="text-2xl font-light mb-4 text-foreground">5. Cookies</h2>
               <p className="text-muted-foreground leading-relaxed text-sm">
-                We use minimal cookies only for essential functionality such as
-                maintaining your session. We do not use tracking cookies for
-                advertising purposes.
+                We use minimal cookies only for essential functionality such as maintaining your
+                session. We do not use tracking cookies for advertising purposes.
               </p>
             </div>
 
             <div className="border-l-2 border-border pl-6">
-              <h2 className="text-2xl font-light mb-4 text-foreground">
-                6. Data Security
-              </h2>
+              <h2 className="text-2xl font-light mb-4 text-foreground">6. Data Security</h2>
               <p className="text-muted-foreground leading-relaxed text-sm">
-                We implement appropriate security measures to protect against
-                unauthorized access or disclosure of information. However, no
-                method of transmission over the internet is 100% secure.
+                We implement appropriate security measures to protect against unauthorized access or
+                disclosure of information. However, no method of transmission over the internet is
+                100% secure.
               </p>
             </div>
 
             <div className="border-l-2 border-border pl-6">
-              <h2 className="text-2xl font-light mb-4 text-foreground">
-                7. Your Rights
-              </h2>
+              <h2 className="text-2xl font-light mb-4 text-foreground">7. Your Rights</h2>
               <p className="text-muted-foreground leading-relaxed text-sm">
-                Since we don't store personal data, there is no data to access,
-                modify, or delete. Your conversations remain private and are
-                automatically cleared when you end your session.
+                Since we don't store personal data, there is no data to access, modify, or delete.
+                Your conversations remain private and are automatically cleared when you end your
+                session.
               </p>
             </div>
 
@@ -157,19 +121,16 @@ export default function PrivacyPage() {
                 8. Changes to Privacy Policy
               </h2>
               <p className="text-muted-foreground leading-relaxed text-sm">
-                We may update this privacy policy from time to time. We will
-                notify users of any changes by updating the "Last updated" date
-                at the top of this policy.
+                We may update this privacy policy from time to time. We will notify users of any
+                changes by updating the "Last updated" date at the top of this policy.
               </p>
             </div>
 
             <div className="border-l-2 border-border pl-6">
-              <h2 className="text-2xl font-light mb-4 text-foreground">
-                9. Contact
-              </h2>
+              <h2 className="text-2xl font-light mb-4 text-foreground">9. Contact</h2>
               <p className="text-muted-foreground leading-relaxed text-sm">
-                If you have any questions about this Privacy Policy, please
-                contact us through our GitHub repository.
+                If you have any questions about this Privacy Policy, please contact us through our
+                GitHub repository.
               </p>
             </div>
           </div>
